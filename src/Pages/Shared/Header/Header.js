@@ -3,10 +3,21 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const Header = () => {
+    // import auth context
+    const {user, logOut} = useContext(AuthContext);
+    console.log(user?.email);
+
+    const handleLogOut = () => {
+        logOut()
+        .then( () => {})
+        .catch( error => console.log(error))
+    }
+
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
@@ -25,8 +36,21 @@ const Header = () => {
             </Nav>
             
             <Nav>
-                <Nav.Link href="/register">Register</Nav.Link>
-                <Nav.Link href="/login">Login</Nav.Link>
+                <>
+                {
+                    user?
+                        <>
+                            <Nav.Link className='text-white'>{user?.email}</Nav.Link>
+                            <Nav.Link onClick={logOut} >Logout</Nav.Link>
+                        </>
+                :
+                    <>
+                        <Nav.Link href="/register">Register</Nav.Link>
+                        <Nav.Link href="/login">Login</Nav.Link>
+                    </>
+                }       
+                </>
+                
             </Nav>
             
             </Navbar.Collapse>
