@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -8,7 +8,10 @@ import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 const Register = () => {
 
     // import authContext functions
-    const {signUp} = useContext(AuthContext);
+    const {signUp, updateUserProfile, verifyEmail} = useContext(AuthContext);
+
+    // error message
+    const [error, setError] = useState("");
 
     const handleRegister = event => {
         event.preventDefault();
@@ -29,16 +32,29 @@ const Register = () => {
         .then(result => {
             const user = result.user;
             console.log(user); //show created user
-             // no error
+            handleUpdateUserProfile(name,photoURL); // add more information
+            setError(""); // no error
             form.reset();
              // toast for success
-             // email verification
+            verifyEmail(); // email verification
 
         })
         .catch(error => {
             console.log(error);
+            setError(error.message);
         })
     }
+
+    const handleUpdateUserProfile = (name, photoURL) => {
+        const profile = {
+            displayName: name,
+            photoURL: photoURL
+        }
+        updateUserProfile(profile)
+        .then(()=>{})
+        .catch(error => console.log(error));
+    }
+
     return (
         <Container>
             <Row>
@@ -88,7 +104,7 @@ const Register = () => {
                 </Form.Group>
 
                 <Form.Text className="text-danger">
-                    <p>Error Message</p>
+                    <p>{error}</p>
                 </Form.Text>
 
                 <Button variant="warning" type="submit">

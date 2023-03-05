@@ -1,18 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {FaGithub, FaGoogle} from 'react-icons/fa'
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 import { GithubAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 
 const Login = () => {
     // import authContext functions
-    const {signIn, providerLogin} = useContext(AuthContext);
+    const {setLoading, signIn, resetPassword, providerLogin} = useContext(AuthContext);
+
+    // error message
+    const [error, setError] = useState("");
+
+    // navigation and location
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
 
     // normal login 
-
     const handleLogIn = event => {
         event.preventDefault();
 
@@ -27,18 +35,49 @@ const Login = () => {
         signIn(email,password)
         .then(result => {
             const user = result.user;
-            console.log(user); //show created user
-             // no error
+            console.log(user); //show logged in user
+            setError(""); // no error
             form.reset();
              // toast for success
-             // email verification
+            
+            // verfied email navigated
+            if(user.emailVerified){
+                navigate(from, {replace: true});
+            }
+            else{
+                setError('Email not verified');
+            }
+
 
         })
         .catch(error => {
             console.log(error);
+            setError(error.message);
         })
+        .finally(() => setLoading(false))
 
     }
+    
+    // send password reset
+    // useState for email saving for reset password
+    const [formEmail, setFormEmail] = useState(""); 
+    // getEmail to save in useState variable formEmail
+    const getEmail  = event => {
+        const email = event.target.value;
+        setFormEmail(email);
+    }
+    // send verification email
+    const sendEmailVerification = event => {
+        console.log(formEmail);
+        // error checking
+        if (formEmail == ""){
+            return setError("No email provided in the Email address field");
+        }
+        resetPassword(formEmail) // call auth func
+        .then( ()=>{} )
+        .catch( error => console.log(error))
+    }
+   
     
     // provider login
     const googleProvider = new GoogleAuthProvider();
@@ -80,7 +119,7 @@ const Login = () => {
                 <Form onSubmit={handleLogIn} className='m-5' style={{ width: '430px' }}>
 
                 {/* Email Address */}
-                <Form.Group className="mb-3 text-white" controlId="formBasicEmail">
+                <Form.Group onBlur={getEmail} className="mb-3 text-white" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" />
                 </Form.Group>
@@ -92,7 +131,7 @@ const Login = () => {
                 </Form.Group>
 
                 <Form.Text className="text-danger">
-                    <p>Error Message</p>
+                    <p>{error}</p>
                 </Form.Text>
 
                 <Button variant="warning" type="submit">
@@ -101,8 +140,9 @@ const Login = () => {
                 <>
                 <br />
                 <br />
-                    <p>Forgot your password? <Link to="/">Reset your password</Link> </p>
+                    <Form.Group>Forgot your password? <Link onClick={sendEmailVerification} to="/login">Send a password reset to your email</Link> </Form.Group>
                 </>  
+                <br />
                 <>
                     <p>Don't have an account? <Link to="/register">Register</Link> </p>
                 </>  

@@ -10,7 +10,6 @@ import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 const Header = () => {
     // import auth context
     const {user, logOut} = useContext(AuthContext);
-    console.log(user?.email);
 
     const handleLogOut = () => {
         logOut()
@@ -40,8 +39,8 @@ const Header = () => {
                 {
                     user?
                         <>
-                            <Nav.Link className='text-white'>{user?.email}</Nav.Link>
-                            <Nav.Link onClick={logOut} >Logout</Nav.Link>
+                            <Nav.Link className='text-white'>Hello <strong>{user?.displayName}</strong></Nav.Link>
+                            <Nav.Link onClick={logOut}>Logout</Nav.Link>
                         </>
                 :
                     <>
