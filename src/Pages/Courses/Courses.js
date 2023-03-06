@@ -1,8 +1,8 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useLoaderData } from 'react-router-dom';
-import MainSec from './MainSec';
-import SideBar from './SideBar';
+import MainSec from './MainSec/MainSec';
+import SideBar from './SideBar/SideBar';
 
 const Courses = () => {
     const courses = useLoaderData();
