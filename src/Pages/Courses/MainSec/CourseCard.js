@@ -17,7 +17,7 @@ const CourseCard = ({course}) => {
                         Course Rating: {rating}
                     </Card.Text>
                 </Card.Body>
-                <Card.Body className='d-flex justify-content-around'>
+                <Card.Body className='d-flex justify-content-around align-items-center'>
                     <Button variant="danger">Get Premium Access</Button>
                     <Card.Text><strong>{total_students} students enrolled</strong></Card.Text>
                 </Card.Body>
