@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 
 const CourseCard = ({course}) => {
     const {course_code, course_id, course_image_url, credits, rating, title, total_students, instructor} = course;
-    console.log(course_code);
     return (
         <div className='d-flex justify-content-center'>
             
-            <Link to={`/courses/${course_id}`} style={{color:'inherit', textDecoration:'none'}}><Card style={{ width: '28em' }}>
-                <Card.Img variant="top" src={course_image_url} />
+            <Card style={{ width: '28em' }}>
+                <Card.Img variant="top"  src={course_image_url} />
                 <Card.Header>{course_code} | {credits} credits</Card.Header>
 
                 <Card.Body>
@@ -20,10 +19,14 @@ const CourseCard = ({course}) => {
                     </Card.Text>
                 </Card.Body>
                 <Card.Body className='d-flex justify-content-around align-items-center'>
-                    <Button variant="danger">Get Premium Access</Button>
+                <Button variant="danger">
+                    <Link to={`/course-details/${course_id}`}  style={{color:'inherit', textDecoration:'none'}}>
+                        See Details
+                    </Link>
+                </Button>
                     <Card.Text><strong>{total_students} students enrolled</strong></Card.Text>
                 </Card.Body>
-            </Card></Link>
+            </Card>
         </div>
     );
 };
