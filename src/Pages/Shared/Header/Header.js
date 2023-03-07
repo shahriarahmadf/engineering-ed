@@ -5,11 +5,16 @@ import {Image, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { FaUserCircle } from 'react-icons/fa';
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+
 
 const Header = () => {
+    // theme toggle button
+
     // import auth context
     const {user, logOut} = useContext(AuthContext);
 
+    // logout handler
     const handleLogOut = () => {
         logOut()
         .then( () => {})
@@ -30,14 +35,26 @@ const Header = () => {
 
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
+            <Nav className="me-auto gap-2">
 
                 <Nav.Link href="/courses">Courses</Nav.Link>
 
                 <Nav.Link href="/blogs">Blogs</Nav.Link>
 
-                <Nav.Link href="/faq">FAQ</Nav.Link>
+                <Nav.Link  href="/faq">FAQ</Nav.Link>
                 
+                <div className='mx-3'>
+                <BootstrapSwitchButton 
+                    
+                    checked={true} 
+                    onlabel='Dark'
+                    offlabel='Light'
+                    onstyle="dark" 
+                    offstyle="outline-light" 
+                    width={80}
+                />
+                </div>
+
             </Nav>
 
             <Nav>

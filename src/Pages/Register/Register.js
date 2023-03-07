@@ -52,7 +52,10 @@ const Register = () => {
         }
         updateUserProfile(profile)
         .then(()=>{})
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            setError(error);
+        });
     }
 
     return (

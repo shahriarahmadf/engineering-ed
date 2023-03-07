@@ -75,7 +75,10 @@ const Login = () => {
         }
         resetPassword(formEmail) // call auth func
         .then( ()=>{} )
-        .catch( error => console.log(error))
+        .catch( error => {
+            console.log(error);
+            setError(error);
+        })
     }
    
     
@@ -102,6 +105,7 @@ const Login = () => {
         })
         .catch(error => {
             console.log(error);
+            setError(error);
         })
         }
 
