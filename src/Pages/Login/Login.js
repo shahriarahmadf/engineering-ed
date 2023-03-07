@@ -153,7 +153,7 @@ const Login = () => {
                    <FaGoogle></FaGoogle> Login with  Google
                 </Button>
 
-                <Button variant="primary" type="submit">
+                <Button onClick={handleGithubProviderLogIn} variant="primary" type="submit">
                    <FaGithub></FaGithub> Login with  GitHub
                 </Button>
                 </span>
