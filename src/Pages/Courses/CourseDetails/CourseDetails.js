@@ -35,7 +35,7 @@ const CourseDetails = () => {
                     </div>
                 </Card.Body>
                 <Card.Body className='d-flex justify-content-around align-items-center'>
-                <Button variant="warning">
+                <Button variant="danger">
                     <Link to={`/checkout-page/${course_id}`} 
                     style={{color:'inherit', textDecoration:'none'}}>
                         Get Premium Access
