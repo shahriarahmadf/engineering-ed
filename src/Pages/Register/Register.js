@@ -94,8 +94,8 @@ const Register = () => {
 
                 {/* Photo URL */}
                 <Form.Group className="mb-3" controlId="formBasicPhotoURL">
-                    <Form.Label>Your Photo URL</Form.Label>
-                    <Form.Control type="text" placeholder="Your Photo URL" required />
+                    <Form.Label>Your Photo URL (optional)</Form.Label>
+                    <Form.Control type="text" placeholder="Your Photo URL"/>
                 </Form.Group>
 
 

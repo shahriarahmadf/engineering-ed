@@ -1,11 +1,10 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-
+import {Image, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
+import { FaUserCircle } from 'react-icons/fa';
 
 const Header = () => {
     // import auth context
@@ -16,6 +15,13 @@ const Header = () => {
         .then( () => {})
         .catch( error => console.log(error))
     }
+
+    // overlay trigger for profile picture icon when logged in
+    const profilePicOverlayTrigger = (props) => (
+        <Tooltip id='button-tooltip' {...props}>
+            {user.displayName}
+        </Tooltip>
+    );
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -33,13 +39,38 @@ const Header = () => {
                 <Nav.Link href="/faq">FAQ</Nav.Link>
                 
             </Nav>
-            
+
             <Nav>
                 <>
                 {
                     user?
                         <>
-                            <Nav.Link className='text-white'>Hello <strong>{user?.displayName}</strong></Nav.Link>
+                            <OverlayTrigger
+                                placement='bottom-start'
+                                delay={{show:250,hide:400}}
+                                overlay={profilePicOverlayTrigger}
+                            >
+                                {
+                                    user?.photoURL?
+                                        <Image
+                                            style=
+                                            {{height:'40px', 
+                                            corderColor:'white'}} 
+                                            roundedCircle 
+                                            src={user.photoURL}
+                                        >
+                                        </Image>
+                                    :
+                                        <FaUserCircle 
+                                        style=
+                                            {{height:'40px', 
+                                            width:'30px', 
+                                            color:'white'}}
+                                        >
+                                        </FaUserCircle>
+
+                                }
+                            </OverlayTrigger>
                             <Nav.Link onClick={logOut}>Logout</Nav.Link>
                         </>
                 :
@@ -51,7 +82,6 @@ const Header = () => {
                 </>
                 
             </Nav>
-            
             </Navbar.Collapse>
         </Container>
         </Navbar>
