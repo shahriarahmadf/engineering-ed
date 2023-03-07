@@ -1,11 +1,12 @@
 import React from 'react';
+import HomeBanner from './Components/HomeBanner/HomeBanner';
 import Instructors from './Components/Instructors/Instructors';
 import Reviews from './Components/Reviews/Reviews';
 
 const Home = () => {
     return (
         <div>
-            <h2>This is Home</h2>
+            <HomeBanner></HomeBanner>
             <Instructors></Instructors>
             <Reviews></Reviews>
         </div>
