@@ -20,7 +20,7 @@ const HomeBanner = () => {
                     />
                 </span>
             </div>
-            <div  className='d-flex justify-content-center'>
+            <div  className='d-flex mb-4 justify-content-center'>
                 <Link to='/courses'>
                     <Button variant="danger" size="lg">
                         See Our Courses
