@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import { toast } from 'react-hot-toast';
+
 
 const Register = () => {
 
@@ -12,6 +14,11 @@ const Register = () => {
 
     // error message
     const [error, setError] = useState("");
+
+    const sendToast = (message) => {
+        console.log('yes');
+        toast.success(message); // success toast
+    }
 
     const handleRegister = event => {
         event.preventDefault();
@@ -25,7 +32,11 @@ const Register = () => {
         const photoURL = form.formBasicPhotoURL.value;
 
         // password error checking
-
+        if(password !== confirmPassword){
+            console.log('not same');
+            setError('Password and Confirm Password do not match.');
+            return;
+        }
 
         // signUp
         signUp(email,password)
@@ -35,9 +46,9 @@ const Register = () => {
             handleUpdateUserProfile(name,photoURL); // add more information
             setError(""); // no error
             form.reset();
-             // toast for success
             verifyEmail(); // email verification
 
+            sendToast('Please check your email.');
         })
         .catch(error => {
             console.log(error);
@@ -79,7 +90,7 @@ const Register = () => {
             
                 {/* Password */}
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Password <span className='text-warning'>(Must be at least six characters)</span></Form.Label>
                     <Form.Control type="password" placeholder="Password" required />
                 </Form.Group>
 
@@ -97,7 +108,7 @@ const Register = () => {
 
                 {/* Photo URL */}
                 <Form.Group className="mb-3" controlId="formBasicPhotoURL">
-                    <Form.Label>Your Photo URL (optional)</Form.Label>
+                    <Form.Label>Your Photo URL <span className='text-warning'>(Optional)</span></Form.Label>
                     <Form.Control type="text" placeholder="Your Photo URL"/>
                 </Form.Group>
 
@@ -132,27 +143,3 @@ const Register = () => {
 
 export default Register;
 
-function BasicExample() {
-    return (
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
-  
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
-    );
-  }

@@ -50,7 +50,7 @@ const CourseDetails = () => {
 const MakePDF = () => (
     <div>
         {
-            console.log('hello')
+            console.log('Under development')
         }
 
     </div>

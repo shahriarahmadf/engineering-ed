@@ -6,6 +6,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { FaUserCircle } from 'react-icons/fa';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+import { Link } from 'react-router-dom';
 
 
 const Header = () => {
@@ -62,14 +63,14 @@ const Header = () => {
                 {
                     user?
                         <>
-                            <OverlayTrigger
+                            <Link to='/profile'><OverlayTrigger
                                 placement='bottom-start'
                                 delay={{show:250,hide:400}}
                                 overlay={profilePicOverlayTrigger}
                             >
                                 {
                                     user?.photoURL?
-                                        <Image
+                                    <Image
                                             style=
                                             {{height:'40px', 
                                             corderColor:'white'}} 
@@ -87,7 +88,7 @@ const Header = () => {
                                         </FaUserCircle>
 
                                 }
-                            </OverlayTrigger>
+                            </OverlayTrigger></Link>
                             <Nav.Link onClick={logOut}>Logout</Nav.Link>
                         </>
                 :
