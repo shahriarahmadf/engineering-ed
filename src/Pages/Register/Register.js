@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Toast } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
-import { toast } from 'react-hot-toast';
 
 
 const Register = () => {
@@ -17,7 +16,8 @@ const Register = () => {
 
     const sendToast = (message) => {
         console.log('yes');
-        toast.success(message); // success toast
+        console.log(message);
+        setError(message);
     }
 
     const handleRegister = event => {
